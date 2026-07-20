@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { environments } from '@env/environments';
+import { environment } from '@env/environment';
 
 import { ShoppingCard } from '@models/carrito.interface';
 
 @Injectable({ providedIn: 'root' })
 export class CarritoService {
-  private API_URL = `${environments.baseUrl}/Carrito`;
+  private API_URL = `${environment.baseUrl}/Carrito`;
   private http = inject(HttpClient);
 
   getCarritoByUserId(userId: number) {

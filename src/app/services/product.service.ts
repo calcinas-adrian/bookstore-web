@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, of } from 'rxjs';
 
-import { environments } from '@env/environments';
+import { environment } from '@env/environment';
 import { Product } from '@models/product.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
-  private readonly API_URL = `${environments.baseUrl}/Productos`;
+  private readonly API_URL = `${environment.baseUrl}/Productos`;
   private http = inject(HttpClient);
 
   getAllProducts() {

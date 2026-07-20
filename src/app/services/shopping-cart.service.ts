@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
-import { environments } from '@env/environments';
+import { environment } from '@env/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ShoppingCartService {
-  private API_URL = `${environments.baseUrl}/Carrito`;
+  private API_URL = `${environment.baseUrl}/Carrito`;
 
   private http = inject(HttpClient);
 

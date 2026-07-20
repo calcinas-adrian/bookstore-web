@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, of } from 'rxjs';
 
-import { environments } from '@env/environments';
+import { environment } from '@env/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SupplierService {
-  private API_URL = `${environments.baseUrl}/Proveedor`;
+  private API_URL = `${environment.baseUrl}/Proveedor`;
   private http = inject(HttpClient);
 
   getSuppliers() {

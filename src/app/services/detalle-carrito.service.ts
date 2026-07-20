@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, of } from 'rxjs';
 
-import { environments } from '@env/environments';
+import { environment } from '@env/environment';
 import { ShoppingCardDetail } from '@models/carrito.interface';
 
 interface DetalleCarritoChanges {
@@ -11,7 +11,7 @@ interface DetalleCarritoChanges {
 
 @Injectable({ providedIn: 'root' })
 export class DetalleCarritoService {
-  private readonly API_URL = `${environments.baseUrl}/DetalleCarrito`;
+  private readonly API_URL = `${environment.baseUrl}/DetalleCarrito`;
   private http = inject(HttpClient);
 
   patchDetalleCarrito(id: number, changes: DetalleCarritoChanges) {

@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, of } from 'rxjs';
 
-import { environments } from '@env/environments';
+import { environment } from '@env/environment';
 import { Category } from '@models/category.interface';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
-  private API_URL = `${environments.baseUrl}/Categorium`;
+  private API_URL = `${environment.baseUrl}/Categorium`;
   private http = inject(HttpClient);
 
   getCategories() {

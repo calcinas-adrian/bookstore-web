@@ -3,12 +3,12 @@ import { inject, Injectable } from '@angular/core';
 
 import { catchError, Observable, of } from 'rxjs';
 
-import { environments } from '@env/environments';
+import { environment } from '@env/environment';
 import type { Purchase } from '@models/purchase.interface';
 
 @Injectable({ providedIn: 'root' })
 export class PurchaseService {
-  private API_URL = `${environments.baseUrl}/Compra`;
+  private API_URL = `${environment.baseUrl}/Compra`;
   private http = inject(HttpClient);
 
   // getPurchaseHistory(): Observable<Purchase[]> {
