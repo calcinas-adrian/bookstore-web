@@ -1,3 +1,3 @@
 export const environment = {
-  baseUrl: 'http://localhost:5210/api',
+  baseUrl: 'https://bookstore-api-p59t.onrender.com/api',
 };
