@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 
@@ -35,6 +35,9 @@ export default class LoginComponent {
   private router = inject(Router);
   private userService = inject(UserService);
 
+  protected EMAIL = 'admin@libreria.com';
+  protected PASSWORD = 'hashed_password_1';
+  protected isLoading = signal<boolean>(false);
   public hidePassword = true;
 
   public myForm = this.fb.group({
@@ -55,6 +58,8 @@ export default class LoginComponent {
 
     if (!correoElectronico?.trim() || !contraseña?.trim()) return;
 
+    this.isLoading.set(true);
+
     this.userService
       .login(correoElectronico, contraseña)
       .pipe(
@@ -72,10 +77,52 @@ export default class LoginComponent {
           // Manejo de errores de inicio de sesión
           console.error('Error de inicio de sesión', error);
           return EMPTY;
-        })
+        }),
       )
       .subscribe({
         next: () => {
+          this.isLoading.set(false);
+
+          // Navegación tras inicio de sesión exitoso
+          this.router.navigate(['/dashboard/products-list']);
+        },
+      });
+  }
+
+  loginWithTestCredentials() {
+    this.isLoading.set(true);
+
+    this.myForm.setValue({
+      correoElectronico: this.EMAIL,
+      contraseña: this.PASSWORD,
+    });
+
+    this.myForm.markAllAsTouched();
+    this.myForm.disable();
+
+    this.userService
+      .login(this.EMAIL, this.PASSWORD)
+      .pipe(
+        tap((resp) => {
+          if (!resp) return;
+
+          // Guardar información esencial en localStorage
+          localStorage.setItem('userId', resp.usuario.id.toString());
+          localStorage.setItem('userEmail', resp.usuario.correoElectronico);
+
+          // Información sensible NO debe guardarse en localStorage
+          // console.log(resp.mensaje)
+        }),
+        catchError((error) => {
+          // Manejo de errores de inicio de sesión
+          console.error('Error de inicio de sesión', error);
+          return EMPTY;
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.isLoading.set(false);
+          this.myForm.enable();
           // Navegación tras inicio de sesión exitoso
           this.router.navigate(['/dashboard/products-list']);
         },

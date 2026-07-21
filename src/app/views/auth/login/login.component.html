@@ -1,4 +1,32 @@
 <shared-auth-layout authTitle="Inicio de sesión">
+  <div
+    class="w-full mx-auto mb-6 rounded-lg border border-white/15 bg-white/5 p-4"
+  >
+    <p class="text-xs uppercase tracking-wide text-white/60 mb-3 text-center">
+      Credenciales de prueba
+    </p>
+
+    <div class="flex flex-col gap-2 mb-4">
+      <div class="flex justify-between items-center text-sm">
+        <span class="text-white/70">Correo</span>
+        <span class="text-white font-medium">{{ EMAIL }}</span>
+      </div>
+      <div class="flex justify-between items-center text-sm">
+        <span class="text-white/70">Contraseña</span>
+        <span class="text-white font-medium">{{ PASSWORD }}</span>
+      </div>
+    </div>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="w-full"
+      (click)="loginWithTestCredentials()"
+    >
+      Usar credenciales de prueba
+    </button>
+  </div>
+
   <!-- Formulario de inicio de sesion -->
   <form
     [formGroup]="myForm"
@@ -14,14 +42,15 @@
         formControlName="correoElectronico"
       />
       <mat-hint>Los errores aparecen instantáneamente!</mat-hint>
-      @if (hasError('correoElectronico', 'email')) {
-      <mat-error>
-        Por favor, introduzca una dirección de correo electrónico válida
-      </mat-error>
-      } @if (hasError('correoElectronico', 'required')) {
-      <mat-error>
-        El correo electrónico es <strong>requerido</strong>
-      </mat-error>
+      @if (hasError("correoElectronico", "email")) {
+        <mat-error>
+          Por favor, introduzca una dirección de correo electrónico válida
+        </mat-error>
+      }
+      @if (hasError("correoElectronico", "required")) {
+        <mat-error>
+          El correo electrónico es <strong>requerido</strong>
+        </mat-error>
       }
     </mat-form-field>
 
@@ -44,10 +73,11 @@
         }}</mat-icon>
       </button>
       <mat-hint>Los errores aparecen instantáneamente!</mat-hint>
-      @if (hasError('contraseña', 'minlength')) {
-      <mat-error> La contraseña debe tener al menos 6 caracteres </mat-error>
-      } @if (hasError('contraseña', 'required')) {
-      <mat-error> La contraseña es <strong>requerida</strong> </mat-error>
+      @if (hasError("contraseña", "minlength")) {
+        <mat-error> La contraseña debe tener al menos 6 caracteres </mat-error>
+      }
+      @if (hasError("contraseña", "required")) {
+        <mat-error> La contraseña es <strong>requerida</strong> </mat-error>
       }
     </mat-form-field>
 
@@ -65,7 +95,7 @@
         mat-raised-button
         color="primary"
         type="submit"
-        [disabled]="myForm.invalid"
+        [disabled]="myForm.invalid || isLoading()"
       >
         Iniciar Sesión
       </button>
